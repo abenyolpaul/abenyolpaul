@@ -1,40 +1,34 @@
 ## Hi there 👋
+def calculate_discount(price, discount_percent):
+    """
+    Calculates the final price after applying a discount.
+    Applies the discount only if it's 20% or higher.
+    """
+    if discount_percent >= 20:
+        discount_amount = price * (discount_percent / 100)
+        final_price = price - discount_amount
+        return final_price
+    else:
+        return price
 
-# Step 1: Create an empty list
-my_list = []
+# Prompt user for input
+try:
+    original_price = float(input("Enter the original price of the item: "))
+    discount = float(input("Enter the discount percentage: "))
 
-# Step 2: Append elements 10, 20, 30, 40
-my_list.append(10)
-my_list.append(20)
-my_list.append(30)
-my_list.append(40)
+    # Calculate and display the final price
+    final_price = calculate_discount(original_price, discount)
 
-# Step 3: Insert 15 at the second position (index 1)
-my_list.insert(1, 15)
+    if discount >= 20:
+        print(f"Discount applied. Final price: {final_price:.2f}")
+    else:
+        print(f"No discount applied. Final price: {final_price:.2f}")
+except ValueError:
+    print("Please enter valid numeric values for price and discount.")
 
-# Step 4: Extend the list with [50, 60, 70]
-my_list.extend([50, 60, 70])
 
-# Step 5: Remove the last element
-my_list.pop()
 
-# Step 6: Sort the list in ascending order
-my_list.sort()
 
-# Step 7: Find and print the index of value 30
-index_of_30 = my_list.index(30)
-print("Index of 30:", index_of_30)
-<!--
-**abenyolpaul/abenyolpaul** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
