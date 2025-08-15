@@ -1,36 +1,79 @@
 ## Hi there 👋
-def modify_text(text):
-    # Example modification: reverse each line and convert to uppercase
-    lines = text.splitlines()
-    modified_lines = [line[::-1].upper() for line in lines]
-    return "\n".join(modified_lines)
+.
 
-def main():
-    filename = input("Enter the filename to read: ")
+🦸 Assignment 1: Design Your Own Class – Superhero Edition
+# Base class
+class Superhero:
+    def __init__(self, name, power, origin):
+        self.name = name
+        self.power = power
+        self.origin = origin
 
-    try:
-        with open(filename, "r") as file:
-            content = file.read()
-    except FileNotFoundError:
-        print(f"❌ Error: The file '{filename}' was not found.")
-        return
-    except IOError:
-        print(f"❌ Error: The file '{filename}' could not be read.")
-        return
+    def introduce(self):
+        print(f"I am {self.name} from {self.origin}, and my power is {self.power}!")
 
-    modified_content = modify_text(content)
+    def use_power(self):
+        print(f"{self.name} uses {self.power}!")
 
-    output_filename = "modified_" + filename
-    try:
-        with open(output_filename, "w") as file:
-            file.write(modified_content)
-        print(f"✅ Success! Modified content written to '{output_filename}'.")
-    except IOError:
-        print(f"❌ Error: Could not write to '{output_filename}'.")
+# Subclass with inheritance and polymorphism
+class FlyingHero(Superhero):
+    def __init__(self, name, power, origin, flight_speed):
+        super().__init__(name, power, origin)
+        self.flight_speed = flight_speed
 
-if __name__ == "__main__":
-    main()
+    def use_power(self):
+        print(f"{self.name} soars through the sky at {self.flight_speed} km/h using {self.power}!")
 
+# Another subclass
+class TechHero(Superhero):
+    def __init__(self, name, power, origin, gadgets):
+        super().__init__(name, power, origin)
+        self.gadgets = gadgets
+
+    def use_power(self):
+        print(f"{self.name} deploys {', '.join(self.gadgets)} to execute {self.power}!")
+
+# Example usage
+hero1 = FlyingHero("Skybolt", "Wind Blast", "Cloud City", 800)
+hero2 = TechHero("Circuit", "Cyber Hack", "Neo-Tokyo", ["Drone", "EMP Blaster"])
+
+hero1.introduce()
+hero1.use_power()
+
+hero2.introduce()
+hero2.use_power()
+
+🎭 Activity 2: Polymorphism Challenge – Vehicles in Motion
+# Base class
+class Vehicle:
+    def move(self):
+        raise NotImplementedError("Subclasses must implement this method.")
+
+# Subclasses with polymorphic behavior
+class Car(Vehicle):
+    def move(self):
+        print("🚗 Driving on the road.")
+
+class Plane(Vehicle):
+    def move(self):
+        print("✈️ Flying through the clouds.")
+
+class Boat(Vehicle):
+    def move(self):
+        print("🛥️ Sailing across the sea.")
+
+class Bicycle(Vehicle):
+    def move(self):
+        print("🚴 Pedaling down the trail.")
+
+# Function to demonstrate polymorphism
+def travel(vehicle: Vehicle):
+    vehicle.move()
+
+# Example usage
+vehicles = [Car(), Plane(), Boat(), Bicycle()]
+for v in vehicles:
+    travel(v)
 
 
 
