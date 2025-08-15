@@ -1,79 +1,93 @@
 ## Hi there 👋
-.
+✅ Task 1: Load and Explore the Dataset
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
 
-🦸 Assignment 1: Design Your Own Class – Superhero Edition
-# Base class
-class Superhero:
-    def __init__(self, name, power, origin):
-        self.name = name
-        self.power = power
-        self.origin = origin
+# Load Iris dataset
+try:
+    iris = load_iris()
+    df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+    df['species'] = pd.Categorical.from_codes(iris.target, iris.target_names)
+    print("✅ Dataset loaded successfully.\n")
+except Exception as e:
+    print(f"❌ Error loading dataset: {e}")
 
-    def introduce(self):
-        print(f"I am {self.name} from {self.origin}, and my power is {self.power}!")
+# Display first few rows
+print("📄 First 5 rows of the dataset:")
+print(df.head())
 
-    def use_power(self):
-        print(f"{self.name} uses {self.power}!")
+# Check data types and missing values
+print("\n🔍 Data types:")
+print(df.dtypes)
 
-# Subclass with inheritance and polymorphism
-class FlyingHero(Superhero):
-    def __init__(self, name, power, origin, flight_speed):
-        super().__init__(name, power, origin)
-        self.flight_speed = flight_speed
+print("\n🧼 Missing values:")
+print(df.isnull().sum())
 
-    def use_power(self):
-        print(f"{self.name} soars through the sky at {self.flight_speed} km/h using {self.power}!")
+# Clean dataset (no missing values in Iris, but here's how you'd handle it)
+df_cleaned = df.dropna()
 
-# Another subclass
-class TechHero(Superhero):
-    def __init__(self, name, power, origin, gadgets):
-        super().__init__(name, power, origin)
-        self.gadgets = gadgets
+✅ Task 2: Basic Data Analysis
+# Basic statistics
+print("\n📊 Basic statistics:")
+print(df_cleaned.describe())
 
-    def use_power(self):
-        print(f"{self.name} deploys {', '.join(self.gadgets)} to execute {self.power}!")
+# Group by species and compute mean of numerical columns
+grouped = df_cleaned.groupby("species").mean()
+print("\n📈 Mean values grouped by species:")
+print(grouped)
 
-# Example usage
-hero1 = FlyingHero("Skybolt", "Wind Blast", "Cloud City", 800)
-hero2 = TechHero("Circuit", "Cyber Hack", "Neo-Tokyo", ["Drone", "EMP Blaster"])
+# Interesting finding
+print("\n💡 Insight:")
+print("Setosa has significantly smaller petal length and width compared to Versicolor and Virginica.")
 
-hero1.introduce()
-hero1.use_power()
+ ✅ Task 3: Data Visualization
+       # Set style
+sns.set(style="whitegrid")
 
-hero2.introduce()
-hero2.use_power()
+# Line chart: simulate time-series by plotting petal length over index
+plt.figure(figsize=(8, 5))
+plt.plot(df_cleaned.index, df_cleaned["petal length (cm)"], label="Petal Length")
+plt.title("📈 Petal Length Trend Over Index")
+plt.xlabel("Index")
+plt.ylabel("Petal Length (cm)")
+plt.legend()
+plt.tight_layout()
+plt.show()
 
-🎭 Activity 2: Polymorphism Challenge – Vehicles in Motion
-# Base class
-class Vehicle:
-    def move(self):
-        raise NotImplementedError("Subclasses must implement this method.")
+# Bar chart: average petal length per species
+plt.figure(figsize=(8, 5))
+sns.barplot(x="species", y="petal length (cm)", data=df_cleaned, ci=None)
+plt.title("📊 Average Petal Length by Species")
+plt.xlabel("Species")
+plt.ylabel("Petal Length (cm)")
+plt.tight_layout()
+plt.show()
 
-# Subclasses with polymorphic behavior
-class Car(Vehicle):
-    def move(self):
-        print("🚗 Driving on the road.")
+# Histogram: distribution of sepal length
+plt.figure(figsize=(8, 5))
+sns.histplot(df_cleaned["sepal length (cm)"], bins=20, kde=True)
+plt.title("📉 Distribution of Sepal Length")
+plt.xlabel("Sepal Length (cm)")
+plt.ylabel("Frequency")
+plt.tight_layout()
+plt.show()
 
-class Plane(Vehicle):
-    def move(self):
-        print("✈️ Flying through the clouds.")
+# Scatter plot: sepal length vs petal length
+plt.figure(figsize=(8, 5))
+sns.scatterplot(x="sepal length (cm)", y="petal length (cm)", hue="species", data=df_cleaned)
+plt.title("🔬 Sepal Length vs Petal Length")
+plt.xlabel("Sepal Length (cm)")
+plt.ylabel("Petal Length (cm)")
+plt.legend(title="Species")
+plt.tight_layout()
+plt.show()
 
-class Boat(Vehicle):
-    def move(self):
-        print("🛥️ Sailing across the sea.")
 
-class Bicycle(Vehicle):
-    def move(self):
-        print("🚴 Pedaling down the trail.")
 
-# Function to demonstrate polymorphism
-def travel(vehicle: Vehicle):
-    vehicle.move()
 
-# Example usage
-vehicles = [Car(), Plane(), Boat(), Bicycle()]
-for v in vehicles:
-    travel(v)
 
 
 
